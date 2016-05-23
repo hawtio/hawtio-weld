@@ -29,6 +29,7 @@ module Weld {
                 .title(() => "Weld")
                 .href(() => "/weld")
                 .subPath("Page", "page", builder.join(Weld.templatePath, "page.html"))
+                .subPath("Archives", "archives", builder.join(Weld.templatePath, "archives.html"))
                 .build();
             builder.configureRouting($routeProvider, tab);
             $locationProvider.html5Mode(true);

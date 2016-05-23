@@ -1,0 +1,23 @@
+<div ng-controller="Weld.ArchivesController">
+
+    <div class="row-fluid">
+        <div class="col-md-6">
+            <label>
+                <input type="checkbox" ng-model="hideAddBda"
+                       title="Additional/synthetic bean archives are automatically created for beans
+                       and extensions which do not belong to any regular bean archive">
+                Hide Additional Bean Archives
+                </label>
+            </label>
+        </div>
+
+        <div class="col-md-6">
+            <hawtio-filter class="pull-right" ng-model="gridOptions.filterOptions.filterText" placeholder="Filter..."></hawtio-filter>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        <table class="table table-condensed table-striped" hawtio-simple-table="gridOptions"></table>
+    </div>
+
+</div>
