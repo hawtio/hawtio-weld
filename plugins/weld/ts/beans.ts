@@ -18,28 +18,34 @@
 
 module Weld {
 
-    module.controller("Weld.ArchivesController", ["$scope", "$location", "jolokia", ($scope, $location, jolokia) => {
-        $scope.archives = [];
-        $scope.hideAddBda = true;
+    module.controller("Weld.BeansController", ["$scope", "$location", "jolokia", ($scope, $location, jolokia) => {
+        $scope.beans = [];
 
         var columns:any[] = [
             {
-                field: 'bdaId',
-                displayName: 'Identifier',
+                field: 'beanClass',
+                displayName: 'Bean class',
                 cellFilter: null,
                 width: "*",
                 resizable: true
             },
             {
-                field: 'beans',
-                displayName: 'Beans',
+                field: 'types',
+                displayName: 'Bean types',
                 cellFilter: null,
                 width: "*",
                 resizable: true
             },
             {
-                field: 'beanDiscoveryMode',
-                displayName: 'Bean Discovery Mode',
+                field: 'scope',
+                displayName: 'Scope',
+                cellFilter: null,
+                width: "*",
+                resizable: true
+            },
+            {
+                field: 'qualifiers',
+                displayName: 'Qualifiers',
                 cellFilter: null,
                 width: "*",
                 resizable: true
@@ -47,7 +53,7 @@ module Weld {
         ];
 
         $scope.gridOptions = {
-            data: 'archives',
+            data: 'beans',
             displayFooter: true,
             displaySelectionCheckbox: false,
             multiSelect: false,
@@ -63,12 +69,11 @@ module Weld {
         jolokia.request({
             type: 'exec',
             mbean: containers[0],
-            operation: 'receiveDeployment'
+            operation: 'receiveBeans',
+            arguments: [1, 10, '', 'FULL']
         }, Core.onSuccess(response => {
-            log.info('archives: ', JSON.parse(response.value).bdas);
-            $scope.archives = JSON.parse(response.value).bdas;
+            $scope.beans = JSON.parse(response.value).data.map(bean => JSON.parse(bean));
             Core.$apply($scope);
         }));
-
     }]);
 }
