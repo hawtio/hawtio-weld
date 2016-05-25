@@ -36,7 +36,8 @@ module Weld {
                 displayName: 'Bean types',
                 cellFilter: null,
                 width: "*",
-                resizable: true
+                resizable: true,
+                cellTemplate: '<div class="ui-grid-cell-contents"><ul class="plain-list"><li ng-repeat="type in row.entity.types"><code ng-bind-html="grid.appScope.abbreviateType(type, true, false, false)"</code></li></ul></div>'
             },
             {
                 field: 'scope',
@@ -60,7 +61,7 @@ module Weld {
             displaySelectionCheckbox: false,
             multiSelect: false,
             canSelectRows: false,
-            enableSorting: true,
+            enableSorting: false,
             columnDefs: columns,
             selectedItems: [],
             filterOptions: {
@@ -68,7 +69,7 @@ module Weld {
             }
         };
 
-        $scope.updateTable = function() {
+        $scope.updateTable = function () {
             jolokia.request({
                 type: 'exec',
                 mbean: containers[0],
@@ -81,6 +82,38 @@ module Weld {
                 $scope.beans = value.data.map(bean => JSON.parse(bean));
                 Core.$apply($scope);
             }));
+        };
+
+        $scope.abbreviateType = function (type, htmlOutput, title, skipIcon) {
+            var parts = type.split('.');
+            var ret = '';
+            var lastIdx = parts.length - 1;
+            if (htmlOutput && title) {
+                ret += ' <span title="' + type + '">';
+            }
+            for (var i = 0; i < parts.length; i++) {
+                if (i === lastIdx) {
+                    ret += parts[i];
+                } else {
+                    if (i === 0 && htmlOutput) {
+                        ret += '<span class="abbreviated">';
+                    }
+                    ret += parts[i].charAt(0);
+                    ret += '.';
+                    if (i === (lastIdx - 1) && htmlOutput) {
+                        ret += '</span>';
+                    }
+                }
+            }
+            if (htmlOutput) {
+                if (title) {
+                    ret += '</span>';
+                }
+                if (!skipIcon) {
+                    ret += ' <i class="fa fa-compress abbreviated"></i>';
+                }
+            }
+            return ret;
         };
 
         $scope.updateTable();
