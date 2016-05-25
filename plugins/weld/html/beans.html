@@ -1,7 +1,17 @@
 <div ng-controller="Weld.BeansController">
 
     <div class="row-fluid">
-        <table class="table table-bordered table-striped" hawtio-simple-table="gridOptions"></table>
+        <div class="col-md-2 form-control-like pull-left">Total Found: {{pageTotal}} </div>
+        <pagination class="col-md-8" style="margin: 0"
+                    items-per-page="pageSize" total-items="pageTotal"
+                    max-size="10" force-ellipses="true" boundary-link-numbers="true"
+                    ng-model="pageIndex" ng-change="updateTable()"></pagination>
+        <button class="col-md-2 btn btn-default">Clear filters</button>
+    </div>
+
+    <div class="row-fluid">
+        <table class="table table-bordered table-striped"
+               hawtio-simple-table="gridOptions"></table>
     </div>
 
 </div>

@@ -18,7 +18,7 @@
 
 module Weld {
 
-    export var module = angular.module(Weld.pluginName, []);
+    export var module = angular.module(Weld.pluginName, ['ui.bootstrap']);
 
     var tab = undefined;
 

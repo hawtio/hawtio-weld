@@ -20,6 +20,8 @@ module Weld {
 
     module.controller("Weld.BeansController", ["$scope", "$location", "jolokia", ($scope, $location, jolokia) => {
         $scope.beans = [];
+        $scope.pageIndex = 1;
+        $scope.pageSize = 20;
 
         var columns:any[] = [
             {
@@ -66,14 +68,21 @@ module Weld {
             }
         };
 
-        jolokia.request({
-            type: 'exec',
-            mbean: containers[0],
-            operation: 'receiveBeans',
-            arguments: [1, 10, '', 'FULL']
-        }, Core.onSuccess(response => {
-            $scope.beans = JSON.parse(response.value).data.map(bean => JSON.parse(bean));
-            Core.$apply($scope);
-        }));
+        $scope.updateTable = function() {
+            jolokia.request({
+                type: 'exec',
+                mbean: containers[0],
+                operation: 'receiveBeans',
+                arguments: [$scope.pageIndex, $scope.pageSize, '', 'FULL']
+            }, Core.onSuccess(response => {
+                var value = JSON.parse(response.value);
+                $scope.pageIndex = value.page;
+                $scope.pageTotal = value.total;
+                $scope.beans = value.data.map(bean => JSON.parse(bean));
+                Core.$apply($scope);
+            }));
+        };
+
+        $scope.updateTable();
     }]);
 }
