@@ -37,7 +37,7 @@ module Weld {
                 cellFilter: null,
                 width: "*",
                 resizable: true,
-                cellTemplate: '<div class="ui-grid-cell-contents"><ul class="plain-list"><li ng-repeat="type in row.entity.types"><code ng-bind-html="grid.appScope.abbreviateType(type, true, false, false)"</code></li></ul></div>'
+                cellTemplate: '<div class="ui-grid-cell-contents"><ul class="plain-list"><li ng-repeat="type in row.entity.types"><code ng-bind-html="grid.appScope.abbreviateType(type, 35)"></code></li></ul></div>'
             },
             {
                 field: 'scope',
@@ -84,36 +84,17 @@ module Weld {
             }));
         };
 
-        $scope.abbreviateType = function (type, htmlOutput, title, skipIcon) {
-            var parts = type.split('.');
-            var ret = '';
-            var lastIdx = parts.length - 1;
-            if (htmlOutput && title) {
-                ret += ' <span title="' + type + '">';
-            }
-            for (var i = 0; i < parts.length; i++) {
-                if (i === lastIdx) {
-                    ret += parts[i];
-                } else {
-                    if (i === 0 && htmlOutput) {
-                        ret += '<span class="abbreviated">';
-                    }
-                    ret += parts[i].charAt(0);
-                    ret += '.';
-                    if (i === (lastIdx - 1) && htmlOutput) {
-                        ret += '</span>';
-                    }
-                }
-            }
-            if (htmlOutput) {
-                if (title) {
-                    ret += '</span>';
-                }
-                if (!skipIcon) {
-                    ret += ' <i class="fa fa-compress abbreviated"></i>';
-                }
-            }
-            return ret;
+        $scope.abbreviateType = function (type:String, size:number, title:boolean = true, icon:boolean = true) {
+            if (type.length < size)
+                return type;
+            else
+                return type.substring(0, type.lastIndexOf('.'))
+                    .split('.')
+                    .reduce(
+                        (result, part) => result + part.charAt(0) + '.',
+                        (title ? '<span title="' + type + '">' : '') + '<span class="abbreviated">')
+                    .concat('</span>', type.substr(type.lastIndexOf('.') + 1), title ? '</span>' : '')
+                    .concat(icon ? ' <i class="fa fa-compress abbreviated"></i>' : '');
         };
 
         $scope.updateTable();
