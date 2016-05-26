@@ -23,55 +23,6 @@ module Weld {
         $scope.pageIndex = 1;
         $scope.pageSize = 20;
 
-        var columns:any[] = [
-            {
-                field: 'beanClass',
-                displayName: 'Bean class',
-                cellFilter: null,
-                width: "*",
-                resizable: true,
-                cellTemplate: '<div class="ui-grid-cell-contents"><code ng-bind-html="grid.appScope.abbreviate(row.entity.beanClass, 35)"></code></div>'
-            },
-            {
-                field: 'types',
-                displayName: 'Bean types',
-                cellFilter: null,
-                width: "*",
-                resizable: true,
-                cellTemplate: '<div class="ui-grid-cell-contents"><ul class="plain-list"><li ng-repeat="type in row.entity.types"><code ng-bind-html="grid.appScope.abbreviate(type, 35)"></code></li></ul></div>'
-            },
-            {
-                field: 'scope',
-                displayName: 'Scope',
-                cellFilter: null,
-                width: "*",
-                resizable: true,
-                cellTemplate: '<div class="ui-grid-cell-contents"><code ng-bind-html="grid.appScope.abbreviate(row.entity.scope, 35)"></code></div>'
-            },
-            {
-                field: 'qualifiers',
-                displayName: 'Qualifiers',
-                cellFilter: null,
-                width: "*",
-                resizable: true,
-                cellTemplate: '<div class="ui-grid-cell-contents"><ul class="plain-list"><li ng-repeat="qualifier in row.entity.qualifiers"><code ng-bind-html="grid.appScope.abbreviate(qualifier, 35)"></code></li></ul></div>'
-            }
-        ];
-
-        $scope.gridOptions = {
-            data: 'beans',
-            displayFooter: true,
-            displaySelectionCheckbox: false,
-            multiSelect: false,
-            canSelectRows: false,
-            enableSorting: false,
-            columnDefs: columns,
-            selectedItems: [],
-            filterOptions: {
-                filterText: ''
-            }
-        };
-
         $scope.updateTable = function () {
             jolokia.request({
                 type: 'exec',

@@ -9,8 +9,45 @@
         <button class="col-md-2 btn btn-default">Clear filters</button>
     </div>
 
-    <div class="row-fluid">
-        <div id="grid" ui-grid="gridOptions" class="col-md-12"></div>
-    </div>
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th></th>
+            <th>
+                Bean class
+            </th>
+            <th>
+                Bean types
+            </th>
+            <th>
+                Scope
+            </th>
+            <th>
+                Qualifiers
+            </th>
+        </tr>
+        <tr ng-repeat="bean in beans">
+            <td>{{(pageIndex - 1) * pageSize + $index + 1}}</td>
+            <td>
+                <code ng-bind-html="abbreviate(bean.beanClass, 35)"></code>
+            </td>
+            <td>
+                <ul class="plain-list">
+                    <li ng-repeat="type in bean.types">
+                        <code ng-bind-html="abbreviate(type, 35)"></code>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <code ng-bind-html="abbreviate(bean.scope, 35)"></code>
+            </td>
+            <td>
+                <ul class="plain-list">
+                    <li ng-repeat="qualifier in bean.qualifiers">
+                        <code ng-bind-html="abbreviate(qualifier, 35)"></code>
+                    </li>
+                </ul>
+            </td>
+        </tr>
+    </table>
 
 </div>
