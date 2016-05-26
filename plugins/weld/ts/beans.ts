@@ -29,7 +29,8 @@ module Weld {
                 displayName: 'Bean class',
                 cellFilter: null,
                 width: "*",
-                resizable: true
+                resizable: true,
+                cellTemplate: '<div class="ui-grid-cell-contents"><code ng-bind-html="grid.appScope.abbreviate(row.entity.beanClass, 35)"></code></div>'
             },
             {
                 field: 'types',
@@ -44,7 +45,8 @@ module Weld {
                 displayName: 'Scope',
                 cellFilter: null,
                 width: "*",
-                resizable: true
+                resizable: true,
+                cellTemplate: '<div class="ui-grid-cell-contents"><code ng-bind-html="grid.appScope.abbreviate(row.entity.scope, 35)"></code></div>'
             },
             {
                 field: 'qualifiers',
