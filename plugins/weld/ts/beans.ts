@@ -88,19 +88,19 @@ module Weld {
         };
 
         $scope.abbreviate = function (type:String, size:number, title:boolean = true, icon:boolean = true) {
-            if (type.length < size)
+            if (type.length < size) {
                 return type;
-            else
-                return ''.concat(
-                    title ? '<span title="' + type + '">' : '',
-                    type.charAt(0) === '@' ? '@' : '',
-                    '<span class="abbreviated">',
-                    type.substring(type.charAt(0) === '@' ? 1 : 0, type.lastIndexOf('.')).split('.')
-                        .reduce((result, part) => result + part.charAt(0) + '.', ''),
-                    '</span>',
-                    type.substr(type.lastIndexOf('.') + 1),
-                    title ? '</span>' : '',
-                    icon ? ' <i class="fa fa-compress abbreviated"></i>' : '');
+            }
+            return ''.concat(
+                title ? '<span title="' + type + '">' : '',
+                type.charAt(0) === '@' ? '@' : '',
+                '<span class="abbreviated">',
+                type.substring(type.charAt(0) === '@' ? 1 : 0, type.lastIndexOf('.')).split('.')
+                    .reduce((result, part) => result + part.charAt(0) + '.', ''),
+                '</span>',
+                type.substr(type.lastIndexOf('.') + 1),
+                title ? '</span>' : '',
+                icon ? ' <i class="fa fa-compress abbreviated"></i>' : '');
         };
 
         $scope.updateTable();
