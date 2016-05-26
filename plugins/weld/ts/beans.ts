@@ -37,7 +37,7 @@ module Weld {
                 cellFilter: null,
                 width: "*",
                 resizable: true,
-                cellTemplate: '<div class="ui-grid-cell-contents"><ul class="plain-list"><li ng-repeat="type in row.entity.types"><code ng-bind-html="grid.appScope.abbreviateType(type, 35)"></code></li></ul></div>'
+                cellTemplate: '<div class="ui-grid-cell-contents"><ul class="plain-list"><li ng-repeat="type in row.entity.types"><code ng-bind-html="grid.appScope.abbreviate(type, 35)"></code></li></ul></div>'
             },
             {
                 field: 'scope',
@@ -51,7 +51,8 @@ module Weld {
                 displayName: 'Qualifiers',
                 cellFilter: null,
                 width: "*",
-                resizable: true
+                resizable: true,
+                cellTemplate: '<div class="ui-grid-cell-contents"><ul class="plain-list"><li ng-repeat="qualifier in row.entity.qualifiers"><code ng-bind-html="grid.appScope.abbreviate(qualifier, 35)"></code></li></ul></div>'
             }
         ];
 
@@ -84,17 +85,20 @@ module Weld {
             }));
         };
 
-        $scope.abbreviateType = function (type:String, size:number, title:boolean = true, icon:boolean = true) {
+        $scope.abbreviate = function (type:String, size:number, title:boolean = true, icon:boolean = true) {
             if (type.length < size)
                 return type;
             else
-                return type.substring(0, type.lastIndexOf('.'))
-                    .split('.')
-                    .reduce(
-                        (result, part) => result + part.charAt(0) + '.',
-                        (title ? '<span title="' + type + '">' : '') + '<span class="abbreviated">')
-                    .concat('</span>', type.substr(type.lastIndexOf('.') + 1), title ? '</span>' : '')
-                    .concat(icon ? ' <i class="fa fa-compress abbreviated"></i>' : '');
+                return ''.concat(
+                    title ? '<span title="' + type + '">' : '',
+                    type.charAt(0) === '@' ? '@' : '',
+                    '<span class="abbreviated">',
+                    type.substring(type.charAt(0) === '@' ? 1 : 0, type.lastIndexOf('.')).split('.')
+                        .reduce((result, part) => result + part.charAt(0) + '.', ''),
+                    '</span>',
+                    type.substr(type.lastIndexOf('.') + 1),
+                    title ? '</span>' : '',
+                    icon ? ' <i class="fa fa-compress abbreviated"></i>' : '');
         };
 
         $scope.updateTable();
