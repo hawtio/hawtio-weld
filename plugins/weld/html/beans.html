@@ -1,12 +1,12 @@
 <div ng-controller="Weld.BeansController">
 
-    <div class="row-fluid">
-        <div class="col-md-2 form-control-like pull-left">Total Found: <span class="badge">{{pageTotal}}</span></div>
-        <pagination class="col-md-8" style="margin: 0"
-                    items-per-page="pageSize" total-items="pageTotal"
+    <div style="display: flex; justify-content: space-around; align-items: center;">
+        <div>Total Found: <span class="badge">{{pageTotal}}</span></div>
+        <pagination items-per-page="pageSize" total-items="pageTotal"
                     max-size="10" force-ellipses="true" boundary-link-numbers="true"
-                    ng-model="pageIndex" ng-change="updateTable()"></pagination>
-        <button class="col-md-2 btn btn-default">Clear filters</button>
+                    ng-model="pageIndex" ng-change="updateTable()">
+        </pagination>
+        <button class="btn btn-default">Clear filters</button>
     </div>
 
     <table class="table table-bordered table-striped">
@@ -58,5 +58,14 @@
             </td>
         </tr>
     </table>
+
+    <div style="display: flex; justify-content: space-around; align-items: center;">
+        <div>Total Found: <span class="badge">{{pageTotal}}</span></div>
+        <pagination items-per-page="pageSize" total-items="pageTotal"
+                    max-size="10" force-ellipses="true" boundary-link-numbers="true"
+                    ng-model="pageIndex" ng-change="updateTable()">
+        </pagination>
+        <button style="visibility: hidden" class="btn btn-default">Clear filters</button>
+    </div>
 
 </div>
