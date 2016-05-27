@@ -16,6 +16,10 @@
                 Bean class
             </th>
             <th>
+                Beans kind
+            </th>
+
+            <th>
                 Bean types
             </th>
             <th>
@@ -26,9 +30,14 @@
             </th>
         </tr>
         <tr ng-repeat="bean in beans">
-            <td>{{(pageIndex - 1) * pageSize + $index + 1}}</td>
+            <td>
+                {{(pageIndex - 1) * pageSize + $index + 1}}
+            </td>
             <td>
                 <code ng-bind-html="abbreviate(bean.beanClass, 35)"></code>
+            </td>
+            <td style="max-width: inherit; width: 80px;">
+                <span class="{{bean.kind}} boxed">{{bean.kind}}</span>
             </td>
             <td>
                 <ul class="plain-list">
