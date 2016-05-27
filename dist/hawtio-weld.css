@@ -17,7 +17,7 @@ ul.plain-list li {
 }
 .boxed {
   font-weight: bold;
-  font-size: 8px;
+  font-size: 0.7em;
   padding: 0px 3px 0px 3px;
   border-radius: 3px;
   color: white;
