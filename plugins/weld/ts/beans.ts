@@ -56,7 +56,7 @@ module Weld {
             },
             template: `
                 <code ng-if="type.length <= size">{{type}}</code>
-                <code ng-if="type.length > size">
+                <code ng-if="type.length > size" tooltip="{{type}}">
                     {{type.charAt(0) === '@' ? '@' : ''}}<span class="abbreviated">{{::left(type)}}</span>{{::right(type)}}
                     <i class="fa fa-compress abbreviated"></i>
                 </code>`
