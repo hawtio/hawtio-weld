@@ -38,22 +38,28 @@ module Weld {
             }));
         };
 
-        $scope.abbreviate = function (type:String, size:number, title:boolean = true, icon:boolean = true) {
-            if (type.length < size) {
-                return type;
-            }
-            return ''.concat(
-                title ? '<span title="' + type + '">' : '',
-                type.charAt(0) === '@' ? '@' : '',
-                '<span class="abbreviated">',
-                type.substring(type.charAt(0) === '@' ? 1 : 0, type.lastIndexOf('.')).split('.')
-                    .reduce((result, part) => result + part.charAt(0) + '.', ''),
-                '</span>',
-                type.substr(type.lastIndexOf('.') + 1),
-                title ? '</span>' : '',
-                icon ? ' <i class="fa fa-compress abbreviated"></i>' : '');
-        };
-
         $scope.updateTable();
     }]);
+
+    module.directive('hawtAbbreviate', function () {
+        return {
+            scope: {
+                type: '=',
+                size: '='
+            },
+            link: (scope) => {
+                scope['left'] = (type:string) => type
+                    .substring(type.charAt(0) === '@' ? 1 : 0, type.lastIndexOf('.'))
+                    .split('.')
+                    .reduce((result, part) => result + part.charAt(0) + '.', '');
+                scope['right'] = (type:string) => type.substr(type.lastIndexOf(".") + 1);
+            },
+            template: `
+                <code ng-if="type.length <= size">{{type}}</code>
+                <code ng-if="type.length > size">
+                    {{type.charAt(0) === '@' ? '@' : ''}}<span class="abbreviated">{{::left(type)}}</span>{{::right(type)}}
+                    <i class="fa fa-compress abbreviated"></i>
+                </code>`
+            };
+    });
 }

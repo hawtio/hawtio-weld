@@ -33,7 +33,7 @@
                 <small>{{(pageIndex - 1) * pageSize + $index + 1}}</small>
             </td>
             <td>
-                <code ng-bind-html="abbreviate(bean.beanClass, 35)"></code>
+                <hawt-abbreviate size="35" type="bean.beanClass"/>
             </td>
             <td style="max-width: inherit; width: 80px;">
                 <span class="{{bean.kind}} boxed">{{bean.kind}}</span>
@@ -41,17 +41,17 @@
             <td>
                 <ul class="plain-list">
                     <li ng-repeat="type in bean.types">
-                        <code ng-bind-html="abbreviate(type, 35)"></code>
+                        <hawt-abbreviate size="35" type="type"/>
                     </li>
                 </ul>
             </td>
             <td>
-                <code ng-bind-html="abbreviate(bean.scope, 35)"></code>
+                <hawt-abbreviate size="35" type="bean.scope"/>
             </td>
             <td>
                 <ul class="plain-list">
                     <li ng-repeat="qualifier in bean.qualifiers">
-                        <code ng-bind-html="abbreviate(qualifier, 35)"></code>
+                        <hawt-abbreviate size="35" type="qualifier"/>
                     </li>
                 </ul>
             </td>
