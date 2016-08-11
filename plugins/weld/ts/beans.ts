@@ -23,7 +23,7 @@ module Weld {
         $scope.pageIndex = 1;
         $scope.pageSize = 20;
 
-        $scope.updateTable = function () {
+        $scope.updateTable = () =>
             jolokia.request({
                 type: 'exec',
                 mbean: containers[0],
@@ -36,30 +36,28 @@ module Weld {
                 $scope.beans = value.data.map(bean => JSON.parse(bean));
                 Core.$apply($scope);
             }));
-        };
 
         $scope.updateTable();
     }]);
 
-    module.directive('hawtAbbreviate', function () {
-        return {
-            scope: {
-                type: '=',
-                size: '='
-            },
-            link: (scope) => {
-                scope['left'] = (type:string) => type
-                    .substring(type.charAt(0) === '@' ? 1 : 0, type.lastIndexOf('.'))
-                    .split('.')
-                    .reduce((result, part) => result + part.charAt(0) + '.', '');
-                scope['right'] = (type:string) => type.substr(type.lastIndexOf(".") + 1);
-            },
-            template: `
-                <code ng-if="type.length <= size">{{type}}</code>
-                <code ng-if="type.length > size" tooltip="{{type}}">
-                    {{type.charAt(0) === '@' ? '@' : ''}}<span class="abbreviated">{{::left(type)}}</span>{{::right(type)}}
-                    <i class="fa fa-compress abbreviated"></i>
-                </code>`
-            };
-    });
+    module.directive('hawtAbbreviate', () => ({
+        scope: {
+            type: '=',
+            size: '='
+        },
+        link: scope => {
+            scope['left'] = (type: string) => type
+                .substring(type.charAt(0) === '@' ? 1 : 0, type.lastIndexOf('.'))
+                .split('.')
+                .reduce((result, part) => result + part.charAt(0) + '.', '');
+            scope['right'] = (type: string) => type.substr(type.lastIndexOf('.') + 1);
+        },
+        template: `
+            <code ng-if="type.length <= size">{{type}}</code>
+            <code ng-if="type.length > size" tooltip="{{type}}">
+                {{type.charAt(0) === '@' ? '@' : ''}}<span class="abbreviated">{{::left(type)}}</span>{{::right(type)}}
+                <i class="fa fa-compress abbreviated"></i>
+            </code>`
+    }
+    ));
 }

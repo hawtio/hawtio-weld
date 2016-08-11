@@ -23,7 +23,7 @@ module Weld {
     var tab = undefined;
 
     module.config(["$locationProvider", "$routeProvider", "HawtioNavBuilderProvider", "$tooltipProvider",
-        ($locationProvider, $routeProvider:ng.route.IRouteProvider, builder:HawtioMainNav.BuilderFactory, $tooltipProvider) => {
+        ($locationProvider, $routeProvider: ng.route.IRouteProvider, builder: HawtioMainNav.BuilderFactory, $tooltipProvider) => {
             tab = builder.create()
                 .id(Weld.pluginName)
                 .title(() => "Weld")
@@ -34,12 +34,11 @@ module Weld {
                 .build();
             builder.configureRouting($routeProvider, tab);
             $locationProvider.html5Mode(true);
-            $tooltipProvider.options({ placement: 'right' });
+            $tooltipProvider.options({placement: 'right'});
         }]);
 
-    module.run(["HawtioNav", "jolokia", (HawtioNav:HawtioMainNav.Registry, jolokia) => {
+    module.run(["HawtioNav", "jolokia", (HawtioNav: HawtioMainNav.Registry, jolokia) => {
         HawtioNav.add(tab);
-        log.debug("loaded");
 
         jolokia.request({
             type: 'search',
